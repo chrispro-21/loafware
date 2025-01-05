@@ -78,6 +78,7 @@ def graphsUpdate(toDisplay, selected):
         print("Fetched Data")
     return time1, values1, title1, toParse
 
+
 # Utility functions
 def innit_connected():
     """
@@ -252,6 +253,7 @@ def experimentThread(cycle_length, dev, con):
     with dataLock:
         global threadHandle
         global activeRead
+        global running
         activeRead = True
         threadStart = time.time()
         for d in dev:
@@ -297,17 +299,18 @@ def experimentThread(cycle_length, dev, con):
             newTime = (
                 0  # if it took longer than cycle length, start new readings right away
             )
-            cycle_length = cycle_length + abs(
-                newTime
-            )  # update passed on cycle length as cycle isn't long enough for readings
+            cycle_length = elapsed  # update passed on cycle length as cycle isn't long enough for readings to be taken
             print("Experiment Cycle too short. Extended to :: {}".format(cycle_length))
         activeRead = False
         database.cycleSet(cycle_length)
-        threadHandle = threading.Timer(
-            newTime, experimentThread, (cycle_length, dev, con)
-        )
-        threadHandle.daemon = True
-        threadHandle.start()
+        if running:
+            threadHandle = threading.Timer(
+                newTime, experimentThread, (cycle_length, dev, con)
+            )
+            threadHandle.daemon = True
+            threadHandle.start()
+        else:
+            print("Ending Experiment")
 
 
 def experimentThreadStop():
@@ -317,6 +320,8 @@ def experimentThreadStop():
     """
     global threadHandle
     global activeRead
+    global running
+    running = False
     if not activeRead:
         threadHandle.cancel()
         for i in range(len(I2C_con)):
@@ -351,6 +356,9 @@ def experimentThreadStart(cycle_length, dev, con):
         array that holds all the I2C control objects as defined in 'sensors/sensor.py'
     """
     global threadHandle
+    global running
+    running = True
+    
     print("Starting Threading with interval :: {}".format(cycle_length))
     threadHandle = threading.Timer(
         cycle_length, experimentThread, (cycle_length, dev, con)
