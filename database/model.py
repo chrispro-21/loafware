@@ -23,12 +23,14 @@ db = SqliteExtDatabase(Config.DATABASE_PATH, check_same_thread=False)
 # model (like a DHT sensor config, sensor reading, etc).
 # Initialize the database using the path from Config
 
+
 class Sensor(Model):
     name = CharField()
     units = CharField()
 
     class Meta:
         database = db
+
 
 class SensorReading(Model):
     time = DateTimeField()
@@ -38,6 +40,7 @@ class SensorReading(Model):
     class Meta:
         database = db
 
+
 class Control(Model):
     name = CharField()
     units = CharField()
@@ -45,6 +48,7 @@ class Control(Model):
 
     class Meta:
         database = db
+
 
 class ControlReading(Model):
     time = DateTimeField()
@@ -56,11 +60,13 @@ class ControlReading(Model):
     class Meta:
         database = db
 
+
 class systemSettings(Model):
     cycleLength = FloatField()
 
     class Meta:
         database = db
+
 
 class Data(object):
     """

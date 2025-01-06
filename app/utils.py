@@ -349,7 +349,7 @@ def experimentThreadStart(cycle_length, dev, con):
     Parameters
     ----------
     cycle_length : int
-        number of seconds between each cycle. NOTE:Does not include running time.
+        number of seconds between each cycle. NOTE: Does not include running time.
     dev : I2C object Array
         array that holds all the I2C sensor objects as defined in 'sensors/sensor.py'
     con : I2C object Array
@@ -358,7 +358,7 @@ def experimentThreadStart(cycle_length, dev, con):
     global threadHandle
     global running
     running = True
-    
+
     print("Starting Threading with interval :: {}".format(cycle_length))
     threadHandle = threading.Timer(
         cycle_length, experimentThread, (cycle_length, dev, con)

@@ -30,6 +30,7 @@ from datetime import datetime, timedelta
 import os
 from pathlib import Path
 
+
 @app.route("/")
 def index():
     """
@@ -77,7 +78,7 @@ def update(graphID, name):
         print(data[0])
         toDisplay[int(graphID)] = data[0]
         return jsonify(data)
-    
+
 
 @app.route("/add", methods=["POST"])
 def add():
