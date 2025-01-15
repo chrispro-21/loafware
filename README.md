@@ -14,7 +14,7 @@ sudo apt install -y git
 sudo apt install nodejs
 
 # Clone and enter repository
-git clone https://github.com/ FEASTorg/loafware
+git clone https://github.com/FEASTorg/loafware
 cd loafware
 
 # Run setup script
@@ -52,13 +52,13 @@ The web interface can be accessed by any computer on the same network. If you're
 
 ## Adding Devices
 
-To add an I2C device/sensor to the system it it must be defined properly in <i>devices.json</i>.
+To add an I2C device/sensor to the system it it must be defined properly in *devices.json*.
 
-<i>devices.json</i> contains two sections, "DEVICES" & "CONTROLS" any sensor needs to be added to "DEVICES" as well as any control mechanism that you also want to read from. I2C devices defined in "DEVICES" are read/read write. "CONTROLS" contains the information for any control system, and is write only.
+*devices.json* contains two sections, "DEVICES" & "CONTROLS" any sensor needs to be added to "DEVICES" as well as any control mechanism that you also want to read from. I2C devices defined in "DEVICES" are read/read write. "CONTROLS" contains the information for any control system, and is write only.
 
 **Note** connected devices are detected dynamically on launch, as such you can leave unused devices in _devices.json_ but if a new device is added after the software is running the system must be rebooted.
 
-An example of <i>devices.json</i>
+An example of *devices.json*
 
 ```
 
@@ -149,7 +149,7 @@ An example of <i>devices.json</i>
 
 - "name" is the name given to the sensor, this must be unique.
 - "address" is the I2C address of the sensor. "unit" is the unit of the measurement (can be an empty string but is required).
-- "form" is how the recieved string is processed and must correlate to a section in <i>sensors/sensor_format.py </i>(see next section).
+- "form" is how the recieved string is processed and must correlate to a section in *sensors/sensor_format.py *(see next section).
 - "req_msg" is the message to send over I2C, can be a number or a list of numbers correlating to the I2C buffer. If no message is to be sent before the read, this can be left as an empty array: `[]`.
 - "delay" is the delay between the write and read required by some sensors.
 - "read_length" is the number of bytes to read from the device.
@@ -190,8 +190,18 @@ To define the feedback for a control system a `.py` file with a path as defined 
 
 **NOTE** see _control/demo.py_ for an example and more information
 
+## Acknowledgements
+
+This was originally written by [Etienne Michels](https://github.com/ebmichel), [Wilson J. Holmes](https://github.com/wilsonjholmes), and [Finn Hafting](https://github.com/FinnWestern).
+
+## License
+
+This software is [licensed](LICENSE) under AGPL-3.0 and can be viewed at [GNU AGPL-3.0 License](https://www.gnu.org/licenses/agpl-3.0.html).
+
+This software was originally developed in 2021 under the GPL-2.0-only license by MOST Research Group. In January 2025, the software was significantly reworked by FAST Research Group, and the license was updated to AGPL-3.0. This change was made to strengthen the principles of open-source reciprocity, ensuring that improvements to the software remain available to the community.
+
 ## Credits
 
 Icons from [feathericons](https://feathericons.com)
 
-Opensource logo from [Remix Icom](https://remixicon.com/)
+Open source logo from [Remix Icom](https://remixicon.com/)

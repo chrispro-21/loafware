@@ -1,21 +1,21 @@
 {
   "name": "loafware",
-  "version": "0.0.0",
-  "description": "Easily extensible opensource bioreactor.",
+  "version": "0.1.0",
+  "description": "Easily extensible open source bioreactor.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/ FEASTorg/loafware.git"
+    "url": "git+ssh://git@github.com/FEASTorg/loafware.git"
   },
-  "author": "Wilson Holmes, Etienne Michels",
+  "author": "Cameron K. Brooks, Wilson Holmes, Etienne Michels",
   "license": "AGPL-3.0-only",
   "bugs": {
-    "url": "https://github.com/ FEASTorg/loafware/issues"
+    "url": "https://github.com/FEASTorg/loafware/issues"
   },
-  "homepage": "https://github.com/ FEASTorg/loafware#readme",
+  "homepage": "https://github.com/FEASTorg/loafware#readme",
   "dependencies": {
     "@popperjs/core": "^2.9.3",
     "bootstrap": "^5.1.0",
