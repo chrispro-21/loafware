@@ -1,5 +1,5 @@
 {
   "dependencies": {
-    "openreactor": "file:static"
+    "loafware": "file:static"
   }
 }

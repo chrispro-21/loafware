@@ -1,4 +1,4 @@
-# OpenReactor
+# Loafware
 
 An easily extensible open source turbidostat with pH and dissolved oxygen control, written in python3.
 
@@ -14,8 +14,8 @@ sudo apt install -y git
 sudo apt install nodejs
 
 # Clone and enter repository
-git clone https://github.com/uwo-fast/openreactor
-cd openreactor
+git clone https://github.com/ FEASTorg/loafware
+cd loafware
 
 # Run setup script
 ./first_time_setup.sh

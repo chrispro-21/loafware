@@ -1,6 +1,6 @@
 {
-  "name": "openreactor",
-  "version": "1.0.0",
+  "name": "loafware",
+  "version": "0.0.0",
   "description": "Easily extensible opensource bioreactor.",
   "main": "index.js",
   "scripts": {
@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/uwo-fast/openreactor.git"
+    "url": "git+ssh://git@github.com/ FEASTorg/loafware.git"
   },
   "author": "Wilson Holmes, Etienne Michels",
-  "license": "GPL-2.0-only",
+  "license": "AGPL-3.0-only",
   "bugs": {
-    "url": "https://github.com/uwo-fast/openreactor/issues"
+    "url": "https://github.com/ FEASTorg/loafware/issues"
   },
-  "homepage": "https://github.com/uwo-fast/openreactor#readme",
+  "homepage": "https://github.com/ FEASTorg/loafware#readme",
   "dependencies": {
     "@popperjs/core": "^2.9.3",
     "bootstrap": "^5.1.0",
