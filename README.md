@@ -1,8 +1,14 @@
 # Loafware
 
-An easily extensible open source turbidostat with pH and dissolved oxygen control, written in python3.
+Loafware enables scientists and innovators to easily and reliably perform experiments and define processes using low-cost, self-made scientific equipment.
 
-# Installation
+## Usage
+
+This considers that you already have your hardware all setup, for instructions on how to set up your hardware see [setup](#setup).
+
+### Installation
+
+Currently the system has been developed and tested only on Raspberry Pi using the default Raspbian OS.
 
 ### For Ubuntu/Raspbian Systems
 
@@ -21,26 +27,30 @@ cd loafware
 ./first_time_setup.sh
 ```
 
-## Running
+### Running
+
+To run the application navigate to the top level of the repository and execute:
 
 ```sh
 ./start.sh
 ```
 
-## Updating
+### Updating
+
+To update your repository with the lasest remote changes use:
 
 ```sh
 git pull --all
 git submodule foreach git pull
 ```
 
-## Reseting python enviroment when done running
+### Resetting python enviroment when done running
 
 ```sh
 deactivate
 ```
 
-## Web Interface
+### Web Interface
 
 The web interface can be accessed by any computer on the same network. If you're connecting from a computer on the local network, this is the ip of the address of the computer running the server followed by `:5000`, for example `141.219.193.214:5000`. If you're accessing it from the same computer that is running the server this is also `localhost:5000`
 
@@ -48,20 +58,19 @@ The web interface can be accessed by any computer on the same network. If you're
 
 - `* Running on http://141.219.193.214:5000/ (Press CTRL+C to quit)`
 
-# Setup
+## Setup
 
-## Adding Devices
+### Adding Devices
 
-To add an I2C device/sensor to the system it it must be defined properly in *devices.json*.
+To add an I2C device/sensor to the system it it must be defined properly in _devices.json_.
 
-*devices.json* contains two sections, "DEVICES" & "CONTROLS" any sensor needs to be added to "DEVICES" as well as any control mechanism that you also want to read from. I2C devices defined in "DEVICES" are read/read write. "CONTROLS" contains the information for any control system, and is write only.
+_devices.json_ contains two sections, "DEVICES" & "CONTROLS" any sensor needs to be added to "DEVICES" as well as any control mechanism that you also want to read from. I2C devices defined in "DEVICES" are read/read write. "CONTROLS" contains the information for any control system, and is write only.
 
 **Note** connected devices are detected dynamically on launch, as such you can leave unused devices in _devices.json_ but if a new device is added after the software is running the system must be rebooted.
 
-An example of *devices.json*
+An example of _devices.json_
 
-```
-
+```json
 {
 "DEVICES":[
    {
@@ -145,18 +154,18 @@ An example of *devices.json*
 }
 ```
 
-## In the "DEVICES" section
+### In the "DEVICES" section
 
 - "name" is the name given to the sensor, this must be unique.
 - "address" is the I2C address of the sensor. "unit" is the unit of the measurement (can be an empty string but is required).
-- "form" is how the recieved string is processed and must correlate to a section in *sensors/sensor_format.py *(see next section).
+- "form" is how the recieved string is processed and must correlate to a section in _sensors/sensor_format.py _(see next section).
 - "req_msg" is the message to send over I2C, can be a number or a list of numbers correlating to the I2C buffer. If no message is to be sent before the read, this can be left as an empty array: `[]`.
 - "delay" is the delay between the write and read required by some sensors.
 - "read_length" is the number of bytes to read from the device.
 
 **NOTE** that if multiple measurements need to be taken from a single device at one address every parameter must be given as a list except for the address (see "Arduino Test I2C", "Arduino Test I2C 2" in the example).
 
-## In the "CONTROLS" section
+### In the "CONTROLS" section
 
 - "name" is the string that is used as a name for the control like in "DEVICES" this must be unique, but can have the same name as an item in "DEVICES".
 - "address" the I2C address for the output, that means if you wanted to send a command to the pump board for example, you used the pump board address.
@@ -173,11 +182,11 @@ An example of *devices.json*
 
 For "CONTROLS" in the first section two mechanisms are defined that will write to the same I2C address (in this case 97). This must be done in this manner and they cannot be listed seperately as you would for devices with seperate addresses.
 
-# Received bytes Formatting
+## Received bytes Formatting
 
 To process the recieved bytes into a parseable float/int/string an `elif` statement must be added to _sensor/sensor_format.py_ where it's true condition correlates to the string given as "form" in _devices.json_
 
-# Feedback Definition
+## Feedback Definition
 
 To define the feedback for a control system a `.py` file with a path as defined in _devices.json_ must be created.
 
