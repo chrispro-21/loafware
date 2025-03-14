@@ -317,6 +317,7 @@ def measure(side):
                     c.control_state(int(control_return["enabled"]))
                     del control_return["enabled"]
                     c.edit_params(control_return)
+                    
     return ("", 204)
 
 

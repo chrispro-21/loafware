@@ -89,13 +89,13 @@ def innit_connected():
         array that the I2C objects are appended to
     """
     connected = ct()
-    I2C_dev = []
+    I2C_dev: list[sensor.I2C] = []
 
     equations = Path(basedir + "/sensors/maths/equations.json")
     equations.touch(exist_ok=True)
     f = open(equations)
     try:
-        j = json.load(f)
+        j: dict[str,str] = json.load(f)
     except:
         f.close()
         j = {}
@@ -142,12 +142,12 @@ def innit_control():
 
     """
     connected = ct()
-    I2C_con = []
+    I2C_con: list[sensor.I2C] = []
     for dev in connected.cons:
         global feedbackModules
         print(dev[1])
         feedbackModules[dev[1]] = importlib.import_module(dev[8][0]["control"])
-        con = sensor.I2C(
+        con: sensor.I2C = sensor.I2C(
             name=dev[1],
             units=dev[2],
             address=dev[0],
@@ -236,7 +236,7 @@ def experiment_entries(timeStart, timeEnd, name):
         return sensor, values, times
 
 
-def experimentThread(cycle_length, dev, con):
+def experimentThread(cycle_length: int, dev: list[sensor.I2C], con: list[sensor.I2C]):
     """
     The function that is used to obtain measurements and run processes in a seperate thread as to not interupt connection.
     Measurements are obtained and formatted using the formatting code in 'sensors/sensor.py'
@@ -368,11 +368,11 @@ def experimentThreadStart(cycle_length, dev, con):
 
 
 # Initialize variables
-feedbackModules = {}
+feedbackModules: dict = {}
 runningExperiments = experiment(os.path.join(basedir, "experiments")).running
 running_start = experiment(os.path.join(basedir, "experiments")).running_start
 I2C_dev, equations = innit_connected()
-I2C_con = innit_control()
+I2C_con: list[sensor.I2C] = innit_control()
 
 toDisplay = []
 devices = [dev.name for dev in Sensor.select()]
