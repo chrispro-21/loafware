@@ -1,17 +1,17 @@
 import struct
 from database.model import ControlReading
-
+import sensors
 
 class feedback:
     """
     Feedback mechanism for Motor II controls.
     """
 
-    def __init__(self, name, I2C):
+    def __init__(self, name: str, I2C: sensors.I2C):
         self.data = 0
         self.params = {}
-        self.name = name
-        self.I2C = I2C
+        self.name: str = name
+        self.I2C: sensors.I2C = I2C
         self.motorID = 2  # Motor II identifier
         self.outputType = "b"
 
@@ -34,7 +34,7 @@ class feedback:
             id_byte = struct.pack(self.outputType, self.motorID)
             speed = int(self.params.get("speed", 0))
             speed_byte = struct.pack(self.outputType, speed)
-            self.data = id_byte + speed_byte
+            self.data = [id_byte, speed_byte]
         except Exception as e:
             print(f"Error packing data for {self.name}: {e}")
             self.data = b""
@@ -42,8 +42,7 @@ class feedback:
     def process(self):
         self.getParams()
         self.params2data()
-        output = self.data
-        return output
+        return self.data
 
     def reset(self):
         try:

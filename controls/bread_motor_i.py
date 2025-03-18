@@ -34,7 +34,7 @@ class feedback:
             id_byte = struct.pack(self.outputType, self.motorID)
             speed = int(self.params.get("speed", 0))
             speed_byte = struct.pack(self.outputType, speed)
-            self.data = id_byte + speed_byte
+            self.data = [id_byte, speed_byte]
         except Exception as e:
             print(f"Error packing data for {self.name}: {e}")
             self.data = b""

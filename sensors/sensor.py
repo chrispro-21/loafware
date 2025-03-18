@@ -50,7 +50,7 @@ class I2C:
         read_length : int
             Number of bytes to read from register.
         """
-        self.name = name
+        self.name: str = name
         self.units = units
         self.addr = address
         self.req_msg = request_message

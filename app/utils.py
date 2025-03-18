@@ -236,7 +236,7 @@ def experiment_entries(timeStart, timeEnd, name):
         return sensor, values, times
 
 
-def experimentThread(cycle_length: int, dev: list[sensor.I2C], con: list[sensor.I2C]):
+def experimentThread(cycle_length: int, dev: list[sensor.I2C], connections: list[sensor.I2C]):
     """
     The function that is used to obtain measurements and run processes in a seperate thread as to not interupt connection.
     Measurements are obtained and formatted using the formatting code in 'sensors/sensor.py'
@@ -270,23 +270,23 @@ def experimentThread(cycle_length: int, dev: list[sensor.I2C], con: list[sensor.
                 # print("Relaunching Thread")
                 # experimentThreadStart(cycle_length,dev,con)
             # print('Stored :: {}'.format(d.name))
-        for i in range(len(con)):
+        for i in range(len(connections)):
             # print('Reading :: {}'.format(c.name))
-            c = con[i]
+            slice: sensor.I2C = connections[i]
             try:
-                m = feedbackModules[c.name]
-                cfb = m.feedback(c.name, c)
-                if c.enabled:
+                slicePlugin = feedbackModules[slice.name]
+                cfb = slicePlugin.feedback(slice.name, slice)
+                if slice.enabled:
                     out = cfb.process()
-                    c.controlMessage(out, cfb.outputType)
-                    c.write()
-                if not c.enabled:
+                    slice.controlMessage(out, cfb.outputType)
+                    slice.write()
+                if not slice.enabled:
                     out = cfb.reset()
-                    c.controlMessage(out, cfb.outputType)
-                    c.write()
-                c.store()
+                    slice.controlMessage(out, cfb.outputType)
+                    slice.write()
+                slice.store()
             except:
-                print("Error with Read of Control:: {}\n".format(c.name))
+                print("Error with Read of Control:: {}\n".format(slice.name))
                 print(Exception)
                 traceback.print_exc()
                 # experimentThreadStop()
@@ -305,7 +305,7 @@ def experimentThread(cycle_length: int, dev: list[sensor.I2C], con: list[sensor.
         database.cycleSet(cycle_length)
         if running:
             threadHandle = threading.Timer(
-                newTime, experimentThread, (cycle_length, dev, con)
+                newTime, experimentThread, (cycle_length, dev, connections)
             )
             threadHandle.daemon = True
             threadHandle.start()
